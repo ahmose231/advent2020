@@ -1,5 +1,3 @@
-// doesn't work
-
 #include <stdio.h>
 #define LINELEN 128
 
@@ -18,14 +16,15 @@ int runslope(int right, int down, char filename[32])
 	int treecount=0;
 	while(fgets(line,LINELEN,fp)!=NULL)
 	{
+		for(int i=1;i<down;i++)
+			fgets(line,LINELEN,fp);
 		path=(path+right)%len;
 		if(line[path]=='#')
 			treecount++;
-		for(int i=1;i<down;i++)
-			fgets(line,LINELEN,fp);
+
 	}
 	fclose(fp);
-	printf("%d\n",treecount);
+
 	return treecount;
 }
 

@@ -60,7 +60,7 @@ int main(int argc, char * argv[])
 			}
 			if(seats[i][k])
 				flag=1;
-	}
+		}
 	
 	fclose(fp);
 	

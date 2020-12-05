@@ -56,13 +56,12 @@ int main(int argc, char * argv[])
 			if(seats[i][k]==0 && flag)
 			{
 				printf("%d\n",(i*8)+k);
+				fclose(fp);
 				return 0;
 			}
 			if(seats[i][k])
 				flag=1;
 		}
-	
-	fclose(fp);
 	
 	return 0;
 }

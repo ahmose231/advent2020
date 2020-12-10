@@ -78,19 +78,16 @@ int main(int argc, char *argv[])
 				onecount++;
 		}
 		
-		// three ones in a row, two combinations
-		if(onecount == 2)
-			total = total * 2;
-
-		// four combinations for 4 ones in a row
-		if(onecount == 3)
-			total = total * 4;
-			
-		// for more ones on a row
-		if(onecount > 3)
-			total = total * 7 * (onecount - 3);
+		switch(onecount)
+		{
+			case 2:total*=2;break;
+			case 3:total*=4;break;
+			case 4:total*=7;break;
+			case 5:total*=13;break;
+			case 6:total*=24;break;
+			case 7:total*=44;break;
+		}
 		
-
 		i += onecount;
 	}
 	

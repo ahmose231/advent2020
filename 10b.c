@@ -68,7 +68,6 @@ int main(int argc, char *argv[])
 
 		if(lines[i+1] - lines[i] == 1)
 		{
-		        // the "first" is for the "charging outlet"
 			if(first)
 			{
 				onecount=1;
@@ -83,9 +82,14 @@ int main(int argc, char *argv[])
 		if(onecount == 2)
 			total = total * 2;
 
-		// four combinations for each 4 ones in a row
-		if(onecount > 2)
-			total = total * 4 * (onecount - 2);
+		// four combinations for 4 ones in a row
+		if(onecount == 3)
+			total = total * 4;
+			
+		// for more ones on a row
+		if(onecount > 3)
+			total = total * 7 * (onecount - 3);
+		
 
 		i += onecount;
 	}

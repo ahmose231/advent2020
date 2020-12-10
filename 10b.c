@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 
 		if(lines[i+1] - lines[i] == 1)
 		{
-      // for the "charging outlet"
+		        // the "first" is for the "charging outlet"
 			if(first)
 			{
 				onecount=1;

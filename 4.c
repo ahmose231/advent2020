@@ -1,72 +1,68 @@
 #include <stdio.h>
-
-int main(int argc, char *argv[])
+#include <string.h>
+#include <stdlib.h>
+#define LEN 16
+void main(int argc, char* argv[])
 {
-	FILE *fp;
-	fp=fopen(argv[1],"r");
+	FILE*fp=fopen(argv[1],"r");
+	char line[LEN];
 	
-	int c;
-	int markcount=0;
-	int valid=0;
+	int x,y;
+	x=y=0;
+		
+	int d;		// direction
+	int u;		// distance
 	
-	c=fgetc(fp);
-	while(1)
-	{	
-		if(c!='c')
-			markcount++;
-			
-		while(1)
+	enum directions{E, S, W, N} 
+		cd, dir;
+	
+	cd=E;	// current direction
+	
+	while(fgets(line,LEN,fp)!=NULL)
+	{
+		d=line[0];
+		
+		line[0]='0';
+		u=atoi(line);
+		
+		if(d=='E') dir=E;
+		if(d=='S') dir=S;
+		if(d=='W') dir=W;
+		if(d=='N') dir=N;
+		
+		if(d=='F') dir=cd;
+		
+		if(d=='R'||d=='L')
 		{
-			c=fgetc(fp);
-			if(c==' ')
-			{
-				c=fgetc(fp);
-				break;
-			}
-			
-			if(c==EOF)
-			{	
-				if(markcount==7)
-					valid++;
-					
-				fclose(fp);
-				printf("%d\n",valid);
+			u=(u/90)%4;
 
-				return 0;
-			}
-			
-			if(c=='\n')
-			{
-				c=fgetc(fp);
+			if(d=='R') 
+				cd=(cd+u)%4;
+			else 
+				cd=(cd+4-u)%4;
 				
-				if(c==EOF)
-				{		
-					if(markcount==7)
-						valid++;
-					fclose(fp);
-					printf("%d\n",valid);
-
-					return 0;
-				}
-				
-				if(c=='\n')
-				{
-					if(markcount==7)
-						valid++;
-
-					markcount=0;
-
-					c=fgetc(fp);
-				}
-				
-				break;
-			}
-
-
-			
+			continue;
 		}
+		
+		switch(dir)
+		{
+			case N:
+				y+=u;
+				break;
+			case S:
+				y-=u;
+				break;
+			case E:
+				x+=u;
+				break;
+			case W:
+				x-=u;
+				break;
+		}
+		
 	}
 	
-	return 0;				
-
+	printf("%d\n",abs(x)+abs(y));
+	
+	return;
 }

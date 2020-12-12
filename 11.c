@@ -38,11 +38,18 @@ void do_round(char **map, int row_count, int col_count)
 		}
 		
 	occupied_count=0;
-	for(int i=1;i<col_count-1;i++)
+	for(int i=1;i<col_count-2;i++)
 	{
-		for(int j=i-1;j<j+2;j++)
+		for(int j=i-1;j<i+2;j++)
 			if(map[1][j]=='#')
 				occupied_count++;
+
+		if(map[0][i-1]=='#')
+			occupied_count++;
+
+		if(map[0][i+1]=='#')
+			occupied_count++;
+
 		switch(map[0][i])
 		{
 			case 'L':
@@ -57,11 +64,18 @@ void do_round(char **map, int row_count, int col_count)
 	}
 	
 	occupied_count=0;
-	for(int i=1;i<col_count-1;i++)
+	for(int i=1;i<col_count-2;i++)
 	{
-		for(int j=i-1;j<j+2;j++)
+		for(int j=i-1;j<i+2;j++)
 			if(map[row_count-1][j]=='#')
 				occupied_count++;
+		
+		if(map[row_count-1][i-1]=='#')
+			occupied_count++;
+		
+		if(map[row_count-1][i+1]=='#')
+			occupied_count++;
+
 		switch(map[row_count-1][i])
 		{
 			case 'L':
@@ -76,11 +90,18 @@ void do_round(char **map, int row_count, int col_count)
 	}
 
 	occupied_count=0;
-	for(int i=1;i<row_count-1;i++)
+	for(int i=1;i<row_count-2;i++)
 	{
-		for(int j=i-1;j<j+2;j++)
+		for(int j=i-1;j<i+2;j++)
 			if(map[j][0]=='#')
 				occupied_count++;
+
+		if(map[i-1][0]=='#')
+			occupied_count++;
+
+		if(map[i+1][0]=='#')
+			occupied_count++;				
+		
 		switch(map[i][0])
 		{
 			case 'L':
@@ -95,11 +116,18 @@ void do_round(char **map, int row_count, int col_count)
 	}
 	
 	occupied_count=0;
-	for(int i=1;i<row_count-1;i++)
+	for(int i=1;i<row_count-2;i++)
 	{
-		for(int j=i-1;j<j+2;j++)
+		for(int j=i-1;j<i+2;j++)
 			if(map[j][col_count-1]=='#')
 				occupied_count++;
+				
+		if(map[i-1][row_count-1]=='#')
+			occupied_count++;
+
+		if(map[i+1][row_count-1]=='#')
+			occupied_count++;
+
 		switch(map[i][col_count-1])
 		{
 			case 'L':
@@ -199,7 +227,9 @@ void do_round(char **map, int row_count, int col_count)
 void main(int argc, char* argv[])
 {
 	FILE*fp=fopen(argv[1],"r");
+	
 	char line[LEN];
+	
 	int col_count;
 	int row_count;
 	
@@ -217,11 +247,11 @@ void main(int argc, char* argv[])
 	char **last_map;
 	
 	for(int i=0;i<row_count;i++)
-		map[i]=malloc(col_count);
-
+		*map=malloc(col_count);
+	
 	for(int i=0;i<row_count;i++)
-		last_map[i]=malloc(col_count);
-					
+		*last_map=malloc(col_count);
+		
 	rewind(fp);
 	for(int i=0;i<row_count;i++)
 	{
@@ -233,11 +263,13 @@ void main(int argc, char* argv[])
 	int flag;
 	int occupied_count=0;
 	
+
 	while(1)
 	{
 		for(int i=0;i<row_count;i++)
 			strcpy(last_map[i],map[i]);
-			
+		
+
 		do_round(map, row_count, col_count);
 		
 		flag=1;

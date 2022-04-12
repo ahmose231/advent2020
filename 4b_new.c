@@ -100,7 +100,7 @@ int check_validity(int section_no, int pass_no)
         case 6:
         if(len!=9) return 0;
         if(is_digit(word)) return 1;
-        else return 0;
+        return 0;
         
         case 7:
         return 1;
@@ -195,13 +195,18 @@ int main()
     int valid=0;
     int flag;
     for(int i=0;i<pass_no;i++)
-    {
-        flag=1;
+    {     
         if(passport[i].filled_sections==7)
+        {
+            flag=1;
             for(int j=0;j<8;j++)
                 if(!check_validity(j, i))
+                {
                     flag=0;
-        if(flag) valid++;
+                    break;
+                }
+            if(flag) valid++;
+        }
     }
                     
     printf("%d\n",valid);       
